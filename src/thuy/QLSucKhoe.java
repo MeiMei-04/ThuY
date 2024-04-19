@@ -34,6 +34,8 @@ public class QLSucKhoe extends javax.swing.JDialog {
     public QLSucKhoe(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        setTitle("QL Sức Khoẻ");
+        setLocationRelativeTo(null);
         daoql = new quanlysuckhoeDao();
         daods = new danhsachdongvatDao();
         filltable();
@@ -47,6 +49,7 @@ public class QLSucKhoe extends javax.swing.JDialog {
         txt_ngaytao.setText("");
         txt_ghiChu.setText("");
         cbb_Dv.setSelectedIndex(0);
+        row = -1;
     }
 
     public void fillCbb() {
@@ -64,7 +67,7 @@ public class QLSucKhoe extends javax.swing.JDialog {
         return a.getId();
     }
 
-    public void add() throws ParseException {
+    public void add()  {
         quanlysuckhoe a = getForm();
         if (!isvalidate) {
             return;
@@ -74,7 +77,7 @@ public class QLSucKhoe extends javax.swing.JDialog {
     }
 //
 
-    public void sua() throws ParseException {
+    public void sua()  {
         if (row < 0) {
             Dialog.mess("Vui Lòng Chọn Trường Dữ Liệu Để Thao Tác");
             return;
@@ -88,7 +91,7 @@ public class QLSucKhoe extends javax.swing.JDialog {
     }
 //
 
-    public void xoa() throws ParseException {
+    public void xoa() {
         if (row < 0) {
             Dialog.mess("Vui Lòng Chọn Trường Dữ Liệu Để Thao Tác");
             return;
@@ -99,7 +102,7 @@ public class QLSucKhoe extends javax.swing.JDialog {
     }
 //
 
-    public quanlysuckhoe getForm() throws ParseException {
+    public quanlysuckhoe getForm()  {
         row = tbl_SucKhoe.getSelectedRow();
         quanlysuckhoe a = new quanlysuckhoe();
         if (row != -1) {
@@ -112,8 +115,8 @@ public class QLSucKhoe extends javax.swing.JDialog {
         String Thuocdasudung = txt_Thuocsd.getText();
         String Ghichu = txt_ghiChu.getText();
         String Ngaytao = txt_ngaytao.getText();
-        String[] strs = {maql,Id_dongvat,Tinhtrangsuckhoe,Thuocdasudung,Ghichu,Ngaytao};
-        isvalidate = uliti.validate.Validate(strs, 6);
+        String[] strs = {maql,Tinhtrangsuckhoe,Thuocdasudung,Ghichu,Ngaytao};
+        isvalidate = uliti.validate.Validate(strs, strs.length);
         a.setMaql(maql);
         a.setId_dongvat(getIDDv());
         a.setTinhtrangsuckhoe(Tinhtrangsuckhoe);
@@ -339,12 +342,10 @@ public class QLSucKhoe extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
-        try {
+
             // TODO add your handling code here:
             add();
-        } catch (ParseException ex) {
-
-        }
+    
     }//GEN-LAST:event_btn_ThemActionPerformed
 
     private void btn_moiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moiActionPerformed
@@ -353,21 +354,17 @@ public class QLSucKhoe extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_moiActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        try {
+
             // TODO add your handling code here:
             sua();
-        } catch (ParseException ex) {
 
-        }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-        try {
+ 
             // TODO add your handling code here:
             xoa();
-        } catch (ParseException ex) {
 
-        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void tbl_SucKhoeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SucKhoeMouseClicked
@@ -376,53 +373,6 @@ public class QLSucKhoe extends javax.swing.JDialog {
         setForm(row);
     }//GEN-LAST:event_tbl_SucKhoeMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLSucKhoe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLSucKhoe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLSucKhoe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLSucKhoe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                QLSucKhoe dialog = null;
-                try {
-                    dialog = new QLSucKhoe(new javax.swing.JFrame(), true);
-                } catch (Exception ex) {
-                    Logger.getLogger(QLSucKhoe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                }
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Them;

@@ -35,6 +35,8 @@ public class QLLichSu extends javax.swing.JDialog {
     public QLLichSu(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        setTitle("Lịch Sử Tiêm Phòng");
+        setLocationRelativeTo(null);
         daols = new lichsutiemphongDao();
         daods = new danhsachdongvatDao();
         fillCbb();
@@ -46,6 +48,7 @@ public class QLLichSu extends javax.swing.JDialog {
         txt_loaibenh.setText("");
         txt_ngaytiem.setText("");
         cbb_Dv.setSelectedIndex(0);
+        row = -1;
     }
 
     public void fillCbb() {
@@ -63,7 +66,7 @@ public class QLLichSu extends javax.swing.JDialog {
         return a.getId();
     }
 
-    public void add() throws ParseException {
+    public void add(){
         lichsutiemphong a = getForm();
         if (!isvalidate) {
             return;
@@ -73,7 +76,7 @@ public class QLLichSu extends javax.swing.JDialog {
     }
 //
 
-    public void sua() throws ParseException {
+    public void sua() {
         if (row < 0) {
             Dialog.mess("Vui Lòng Chọn Trường Dữ Liệu Để Thao Tác");
             return;
@@ -87,7 +90,7 @@ public class QLLichSu extends javax.swing.JDialog {
     }
 //
 
-    public void xoa() throws ParseException {
+    public void xoa() {
         if (row < 0) {
             Dialog.mess("Vui Lòng Chọn Trường Dữ Liệu Để Thao Tác");
             return;
@@ -98,7 +101,7 @@ public class QLLichSu extends javax.swing.JDialog {
     }
 //
 
-    public lichsutiemphong getForm() throws ParseException {
+    public lichsutiemphong getForm(){
         row = tbl_ls.getSelectedRow();
         lichsutiemphong a = new lichsutiemphong();
         if (row != -1) {
@@ -109,8 +112,8 @@ public class QLLichSu extends javax.swing.JDialog {
         String Id_dongvat = String.valueOf(getIDDv());
         String Loaibenh = txt_loaibenh.getText();
         String Ngaytiem = txt_ngaytiem.getText();
-        String[] strs = {mals, Id_dongvat, Loaibenh, Ngaytiem};
-        isvalidate = uliti.validate.Validate(strs, 4);
+        String[] strs = {mals, Loaibenh, Ngaytiem};
+        isvalidate = uliti.validate.Validate(strs, strs.length);
         a.setMals(mals);
         a.setId_dongvat(getIDDv());
         a.setLoaibenh(Loaibenh);
@@ -308,30 +311,24 @@ public class QLLichSu extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_moiActionPerformed
 
     private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
-        try {
+
             // TODO add your handling code here:
             add();
-        } catch (ParseException ex) {
-            Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+ 
     }//GEN-LAST:event_btn_ThemActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        try {
+
             // TODO add your handling code here:
             sua();
-        } catch (ParseException ex) {
-            Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-        try {
+
             // TODO add your handling code here:
             xoa();
-        } catch (ParseException ex) {
-            Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void tbl_lsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_lsMouseClicked
@@ -340,53 +337,7 @@ public class QLLichSu extends javax.swing.JDialog {
         setForm(row);
     }//GEN-LAST:event_tbl_lsMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                QLLichSu dialog = null;
-                try {
-                    dialog = new QLLichSu(new javax.swing.JFrame(), true);
-                } catch (Exception ex) {
-                    Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Them;

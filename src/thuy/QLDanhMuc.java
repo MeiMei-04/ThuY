@@ -30,6 +30,8 @@ public class QLDanhMuc extends javax.swing.JDialog {
     public QLDanhMuc(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        setTitle("QL Danh Mục");
+        setLocationRelativeTo(null);
         dao = new danhmucdongvatDao();
         filltable();
     }
@@ -37,6 +39,7 @@ public class QLDanhMuc extends javax.swing.JDialog {
     public void moi() {
         txt_madm.setText("");
         txt_tendm.setText("");
+        row = -1;
     }
 
     public void add() {
@@ -81,7 +84,7 @@ public class QLDanhMuc extends javax.swing.JDialog {
         String madm = txt_madm.getText();
         String tendm = txt_tendm.getText();
         String[] strs = {madm, tendm};
-        isvalidate = uliti.validate.Validate(strs, 2);
+        isvalidate = uliti.validate.Validate(strs, strs.length);
         a.setMadm(madm);
         a.setTendm(tendm);
         return a;
@@ -266,53 +269,7 @@ public class QLDanhMuc extends javax.swing.JDialog {
         setForm(row);
     }//GEN-LAST:event_tbl_DanhMucMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                QLDanhMuc dialog = null;
-                try {
-                    dialog = new QLDanhMuc(new javax.swing.JFrame(), true);
-                } catch (Exception ex) {
-                    Logger.getLogger(QLDanhMuc.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Them;

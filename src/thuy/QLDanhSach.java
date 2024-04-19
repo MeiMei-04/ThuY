@@ -33,6 +33,8 @@ public class QLDanhSach extends javax.swing.JDialog {
     public QLDanhSach(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
+        this.setTitle("Danh Sách Động Vật");
+        setLocationRelativeTo(null);
         dmdao = new danhmucdongvatDao();
         dsdao = new danhsachdongvatDao();
         filltable();
@@ -42,8 +44,9 @@ public class QLDanhSach extends javax.swing.JDialog {
         txt_CanNang.setText("");
         txt_GhiChu.setText("");
         txt_MaDV.setText("");
-        txt_MaDV.setText("");
+        txt_TenDV.setText("");
         cbb_DanhMuc.setSelectedIndex(0);
+        row = -1;
     }
     public void fillCbb(){
         lstdm = dmdao.getAllData();
@@ -102,8 +105,8 @@ public class QLDanhSach extends javax.swing.JDialog {
         String Tendv = txt_TenDV.getText();
         String cannangstr = txt_CanNang.getText();
         String ghiChu = txt_GhiChu.getText();
-        String[] strs = {madv,iddv,Tendv,cannangstr,ghiChu};
-        isValidate = uliti.validate.Validate(strs, 5);
+        String[] strs = {madv,Tendv,cannangstr,ghiChu};
+        isValidate = uliti.validate.Validate(strs, strs.length);
         a.setMadv(madv);
         a.setId_danhmuc(getIDDm());
         a.setTendv(Tendv);
@@ -340,52 +343,7 @@ public class QLDanhSach extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLDanhSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLDanhSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLDanhSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLDanhSach.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                QLDanhSach dialog = null;
-                try {
-                    dialog = new QLDanhSach(new javax.swing.JFrame(), true);
-                } catch (Exception ex) {
-                    Logger.getLogger(QLDanhSach.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Them;

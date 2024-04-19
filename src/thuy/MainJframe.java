@@ -131,7 +131,7 @@ public class MainJframe extends javax.swing.JFrame {
             // TODO add your handling code here:
             new QLDanhSach(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }//GEN-LAST:event_dsdvActionPerformed
 
@@ -141,7 +141,7 @@ public class MainJframe extends javax.swing.JFrame {
             // TODO add your handling code here:
             new QLSucKhoe(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
     }//GEN-LAST:event_qlskActionPerformed
 
@@ -151,7 +151,7 @@ public class MainJframe extends javax.swing.JFrame {
             // TODO add your handling code here:
             new QLLichSu(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
+            ;
         }
     }//GEN-LAST:event_lstiemActionPerformed
 
@@ -161,7 +161,7 @@ public class MainJframe extends javax.swing.JFrame {
             // TODO add your handling code here:
             new QLDanhMuc(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
     }//GEN-LAST:event_dmdvActionPerformed
 

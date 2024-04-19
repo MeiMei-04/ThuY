@@ -18,7 +18,7 @@ public class Dialog {
         JOptionPane.showMessageDialog(null, str+" Thất Bại", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
     }
     public static void messnotnull(String str){
-        JOptionPane.showMessageDialog(null, "Thông Tin Không Được Để Trống: "+str, "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null,str, "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
     }
     public static void mess(String str){
         JOptionPane.showMessageDialog(null, str, "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
