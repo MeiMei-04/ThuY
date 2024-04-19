@@ -11,14 +11,17 @@ package uliti;
 public class validate {
 
     public static boolean Validate(String[] str, int n) {
-        System.out.println(str.length);
+        int isnull = 0;
         if (n > 0) {
             for (int i = 0; i < n; i++) {
                 if (str[i].equals("") || str[i] == null) {
-                    Dialog.messnotnull("Còn Trống "+ (n-i)+" ô chưa nhập");
-                    return false;
+                    isnull++;
                 }
             }
+        }
+        if (isnull > 0) {
+            Dialog.messnotnull("Còn Trống " + isnull + " ô chưa nhập");
+            return false;
         }
         return true;
     }
