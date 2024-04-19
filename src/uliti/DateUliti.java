@@ -15,6 +15,9 @@ import java.util.Date;
  */
 public class DateUliti {
 
+    public static Date convertToSqlDate(Date utilDate) {
+        return new Date(utilDate.getTime());
+    }
     public static Date stringToDate(String dateString, String format) throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.parse(dateString);

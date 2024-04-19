@@ -11,12 +11,12 @@ import java.util.logging.Logger;
  *
  * @author Hieu
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class MainJframe extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public MainJframe() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -129,9 +129,9 @@ public class NewJFrame extends javax.swing.JFrame {
     private void dsdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dsdvActionPerformed
         try {
             // TODO add your handling code here:
-            new danhsachdongvatJDiaLog(this, true).setVisible(true);
+            new QLDanhSach(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_dsdvActionPerformed
 
@@ -139,9 +139,9 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            new quanlysuckhoeJDialog(this, true).setVisible(true);
+            new QLSucKhoe(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_qlskActionPerformed
 
@@ -149,9 +149,9 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            new lichsutiemphongJDialog(this, true).setVisible(true);
+            new QLLichSu(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_lstiemActionPerformed
 
@@ -159,9 +159,9 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            new danhmucdongvatJDiaLog(this, true).setVisible(true);
+            new QLDanhMuc(this, true).setVisible(true);
         } catch (Exception ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainJframe.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_dmdvActionPerformed
 
@@ -182,20 +182,21 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainJframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainJframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainJframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainJframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new MainJframe().setVisible(true);
             }
         });
     }

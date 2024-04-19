@@ -17,7 +17,7 @@ import uliti.Dialog;
  *
  * @author Hieu
  */
-public class danhmucdongvatJDiaLog extends javax.swing.JDialog {
+public class QLDanhMuc extends javax.swing.JDialog {
 
     boolean isvalidate = false;
     int row = -1;
@@ -27,7 +27,7 @@ public class danhmucdongvatJDiaLog extends javax.swing.JDialog {
     /**
      * Creates new form danhmucdongvatJDiaLog
      */
-    public danhmucdongvatJDiaLog(java.awt.Frame parent, boolean modal) throws Exception {
+    public QLDanhMuc(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
         dao = new danhmucdongvatDao();
@@ -283,24 +283,25 @@ public class danhmucdongvatJDiaLog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(danhmucdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(danhmucdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(danhmucdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(danhmucdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLDanhMuc.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                danhmucdongvatJDiaLog dialog = null;
+                QLDanhMuc dialog = null;
                 try {
-                    dialog = new danhmucdongvatJDiaLog(new javax.swing.JFrame(), true);
+                    dialog = new QLDanhMuc(new javax.swing.JFrame(), true);
                 } catch (Exception ex) {
-                    Logger.getLogger(danhmucdongvatJDiaLog.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(QLDanhMuc.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override

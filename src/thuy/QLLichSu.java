@@ -4,11 +4,12 @@
  */
 package thuy;
 
-import dao.danhmucdongvatDao;
 import dao.danhsachdongvatDao;
+import dao.lichsutiemphongDao;
 import entity.danhmucdongvat;
 import entity.danhsachdongvat;
-import java.util.ArrayList;
+import entity.lichsutiemphong;
+import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,139 +20,144 @@ import uliti.Dialog;
  *
  * @author Hieu
  */
-public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
+public class QLLichSu extends javax.swing.JDialog {
+
+    List<lichsutiemphong> lstls;
+    List<danhsachdongvat> lstds;
+    lichsutiemphongDao daols;
+    danhsachdongvatDao daods;
     int row = -1;
-    boolean isValidate = false;
-    List<danhmucdongvat> lstdm = new ArrayList<>();
-    List<danhsachdongvat> lstdv = new ArrayList<>();
-    public danhmucdongvatDao dmdao;
-    public danhsachdongvatDao dsdao;
+    boolean isvalidate = false;
 
     /**
-     * Creates new form danhsachdongvat
+     * Creates new form lichsutiemphongJDialog
      */
-    public danhsachdongvatJDiaLog(java.awt.Frame parent, boolean modal) throws Exception {
+    public QLLichSu(java.awt.Frame parent, boolean modal) throws Exception {
         super(parent, modal);
         initComponents();
-        dmdao = new danhmucdongvatDao();
-        dsdao = new danhsachdongvatDao();
-        filltable();
+        daols = new lichsutiemphongDao();
+        daods = new danhsachdongvatDao();
         fillCbb();
+        filltable();
     }
+
     public void moi() {
-        txt_CanNang.setText("");
-        txt_GhiChu.setText("");
-        txt_MaDV.setText("");
-        txt_MaDV.setText("");
-        cbb_DanhMuc.setSelectedIndex(0);
+        txt_mals.setText("");
+        txt_loaibenh.setText("");
+        txt_ngaytiem.setText("");
+        cbb_Dv.setSelectedIndex(0);
     }
-    public void fillCbb(){
-        lstdm = dmdao.getAllData();
-        cbb_DanhMuc.removeAllItems();
-        for (danhmucdongvat object : lstdm) {
-            cbb_DanhMuc.addItem(object.getTendm());
+
+    public void fillCbb() {
+        lstds = daods.getAllData();
+        cbb_Dv.removeAllItems();
+        for (danhsachdongvat object : lstds) {
+            cbb_Dv.addItem(object.getTendv());
         }
     }
-    public int getIDDm(){
-        int index = cbb_DanhMuc.getSelectedIndex();
-        lstdm = dmdao.getAllData();
-        danhmucdongvat a = lstdm.get(index);
+
+    public int getIDDv() {
+        int index = cbb_Dv.getSelectedIndex();
+        lstds = daods.getAllData();
+        danhsachdongvat a = lstds.get(index);
         return a.getId();
     }
-    public void add() {
-        danhsachdongvat a = getForm();
-        if (!isValidate) {
+
+    public void add() throws ParseException {
+        lichsutiemphong a = getForm();
+        if (!isvalidate) {
             return;
         }
-        dsdao.addData(a);
+        daols.addData(a);
         filltable();
     }
 //
-    public void sua() {
+
+    public void sua() throws ParseException {
         if (row < 0) {
             Dialog.mess("Vui Lòng Chọn Trường Dữ Liệu Để Thao Tác");
             return;
         }
-        danhsachdongvat a = getForm();
-        if (!isValidate) {
+        lichsutiemphong a = getForm();
+        if (!isvalidate) {
             return;
         }
-        dsdao.updateData(a);
+        daols.updateData(a);
         filltable();
     }
 //
-    public void xoa() {
+
+    public void xoa() throws ParseException {
         if (row < 0) {
             Dialog.mess("Vui Lòng Chọn Trường Dữ Liệu Để Thao Tác");
             return;
         }
-        danhsachdongvat a = getForm();
-        dsdao.deleteData(a);
+        lichsutiemphong a = getForm();
+        daols.deleteData(a);
         filltable();
     }
 //
-    public danhsachdongvat getForm() {
-        row = tbl_DongVat.getSelectedRow();
-        danhsachdongvat a = new danhsachdongvat();
+
+    public lichsutiemphong getForm() throws ParseException {
+        row = tbl_ls.getSelectedRow();
+        lichsutiemphong a = new lichsutiemphong();
         if (row != -1) {
-            int id = (int) tbl_DongVat.getValueAt(row, 0);
+            int id = (int) tbl_ls.getValueAt(row, 0);
             a.setId(id);
         }
-        String madv = txt_MaDV.getText();
-        String iddv = String.valueOf(getIDDm());
-        String Tendv = txt_TenDV.getText();
-        String cannangstr = txt_CanNang.getText();
-        String ghiChu = txt_GhiChu.getText();
-        String[] strs = {madv,iddv,Tendv,cannangstr,ghiChu};
-        isValidate = uliti.validate.Validate(strs, 5);
-        a.setMadv(madv);
-        a.setId_danhmuc(getIDDm());
-        a.setTendv(Tendv);
+        String mals = txt_mals.getText();
+        String Id_dongvat = String.valueOf(getIDDv());
+        String Loaibenh = txt_loaibenh.getText();
+        String Ngaytiem = txt_ngaytiem.getText();
+        String[] strs = {mals, Id_dongvat, Loaibenh, Ngaytiem};
+        isvalidate = uliti.validate.Validate(strs, 4);
+        a.setMals(mals);
+        a.setId_dongvat(getIDDv());
+        a.setLoaibenh(Loaibenh);
         try {
-            float cannang = Float.parseFloat(cannangstr);
-            a.setCannang(cannang);
+            a.setNgaytiem(uliti.DateUliti.stringToDate(Ngaytiem, "dd/MM/yyyy"));
         } catch (Exception e) {
         }
-        a.setGhichu(ghiChu);
         return a;
     }
 //
+
     public void setForm(int index) {
-        lstdv = dsdao.getAllData();
-        if (lstdv.isEmpty()) {
+        lstls = daols.getAllData();
+        if (lstls.isEmpty()) {
             System.out.println("Danh Sách Trống");
             return;
         }
-        danhsachdongvat a = lstdv.get(index);
-        txt_MaDV.setText(a.getMadv());
-        txt_TenDV.setText(a.getTendv());
-        txt_CanNang.setText(String.valueOf(a.getCannang()));
-        txt_GhiChu.setText(a.getGhichu());
-        cbb_DanhMuc.setSelectedItem(a.getTendm());
+        lichsutiemphong a = lstls.get(index);
+        txt_mals.setText(a.getMals());
+        txt_loaibenh.setText(a.getLoaibenh());
+        txt_ngaytiem.setText(uliti.DateUliti.dateToString(a.getNgaytiem(), "dd/MM/yyyy"));
+        cbb_Dv.setSelectedItem(a.getTendv());
     }
 
     public void filltable() {
-        DefaultTableModel defaultTableModel = (DefaultTableModel) tbl_DongVat.getModel();
+        DefaultTableModel defaultTableModel = (DefaultTableModel) tbl_ls.getModel();
         defaultTableModel.setRowCount(0);
-        lstdv = dsdao.getAllData();
-        if (lstdv.isEmpty()) {
+        lstls = daols.getAllData();
+        if (lstls.isEmpty()) {
             System.out.println("Danh Sách Trống");
             return;
         }
         int i = 0;
-        for (danhsachdongvat object : lstdv) {
+        for (lichsutiemphong object : lstls) {
             i++;
             Object[] row = {
                 object.getId(),
-                object.getMadv(),
-                object.getTendm(),
+                object.getMals(),
                 object.getTendv(),
-                object.getCannang(),
+                object.getLoaibenh(),
+                object.getNgaytiem(),
                 object.getTrangthai() == 1 ? "Tạm Chưa Nghĩ Ra" : "aa"
             };
             defaultTableModel.addRow(row);
         }
-    }    
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -161,27 +167,34 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_DongVat = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        txt_MaDV = new javax.swing.JTextField();
+        txt_mals = new javax.swing.JTextField();
+        txt_loaibenh = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txt_TenDV = new javax.swing.JTextField();
+        txt_ngaytiem = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txt_CanNang = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txt_GhiChu = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
-        cbb_DanhMuc = new javax.swing.JComboBox<>();
-        btn_Them = new javax.swing.JButton();
+        cbb_Dv = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_ls = new javax.swing.JTable();
         btn_moi = new javax.swing.JButton();
+        btn_Them = new javax.swing.JButton();
         btn_sua = new javax.swing.JButton();
         btn_xoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tbl_DongVat.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel1.setText("Mã LS");
+
+        jLabel2.setText("Loại Bệnh");
+
+        jLabel3.setText("Ngày Tiêm");
+
+        jLabel4.setText("Tên ĐV");
+
+        cbb_Dv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        tbl_ls.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -189,43 +202,27 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Mã DV", "Tên Dm", "Tên DV", "Cân Nặng", "Trạng Thái"
+                "ID", "Mã LS", "Tên Đv", "Loại Bệnh", "Ngày Tiêm", "Trạng Thái"
             }
         ));
-        tbl_DongVat.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_ls.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_DongVatMouseClicked(evt);
+                tbl_lsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbl_DongVat);
-
-        jLabel1.setText("Mã DV");
-
-        jLabel2.setText("Tên DV");
-
-        jLabel3.setText("Cân nặng");
-
-        jLabel4.setText("Ghi Chú");
-
-        txt_GhiChu.setColumns(20);
-        txt_GhiChu.setRows(5);
-        jScrollPane2.setViewportView(txt_GhiChu);
-
-        jLabel5.setText("Danh Mục");
-
-        cbb_DanhMuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        btn_Them.setText("Thêm");
-        btn_Them.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ThemActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(tbl_ls);
 
         btn_moi.setText("Mới");
         btn_moi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_moiActionPerformed(evt);
+            }
+        });
+
+        btn_Them.setText("Thêm");
+        btn_Them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThemActionPerformed(evt);
             }
         });
 
@@ -247,20 +244,18 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel1)
-                        .addComponent(txt_MaDV, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_mals)
                         .addComponent(jLabel2)
-                        .addComponent(txt_TenDV, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_loaibenh, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                         .addComponent(jLabel3)
-                        .addComponent(txt_CanNang, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_ngaytiem, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
                         .addComponent(jLabel4)
-                        .addComponent(jScrollPane2)
-                        .addComponent(jLabel5)
-                        .addComponent(cbb_DanhMuc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbb_Dv, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btn_Them)
                         .addGap(18, 18, 18)
@@ -268,74 +263,82 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(btn_xoa))
                     .addComponent(btn_moi))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_MaDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_mals, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_TenDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_loaibenh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_CanNang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_ngaytiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbb_DanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbb_Dv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_Them)
                             .addComponent(btn_sua)
                             .addComponent(btn_xoa))
                         .addGap(18, 18, 18)
-                        .addComponent(btn_moi))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(btn_moi)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
-        // TODO add your handling code here:
-        add();
-    }//GEN-LAST:event_btn_ThemActionPerformed
 
     private void btn_moiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_moiActionPerformed
         // TODO add your handling code here:
         moi();
     }//GEN-LAST:event_btn_moiActionPerformed
 
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
+        try {
+            // TODO add your handling code here:
+            add();
+        } catch (ParseException ex) {
+            Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_ThemActionPerformed
+
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        // TODO add your handling code here:
-        sua();
+        try {
+            // TODO add your handling code here:
+            sua();
+        } catch (ParseException ex) {
+            Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-        // TODO add your handling code here:
-        xoa();
+        try {
+            // TODO add your handling code here:
+            xoa();
+        } catch (ParseException ex) {
+            Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
-    private void tbl_DongVatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DongVatMouseClicked
+    private void tbl_lsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_lsMouseClicked
         // TODO add your handling code here:
-        row = tbl_DongVat.getSelectedRow();
+        row = tbl_ls.getSelectedRow();
         setForm(row);
-    }//GEN-LAST:event_tbl_DongVatMouseClicked
+    }//GEN-LAST:event_tbl_lsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -354,13 +357,13 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(danhsachdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(danhsachdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(danhsachdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(danhsachdongvatJDiaLog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLLichSu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -368,11 +371,11 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                danhsachdongvatJDiaLog dialog = null;
+                QLLichSu dialog = null;
                 try {
-                    dialog = new danhsachdongvatJDiaLog(new javax.swing.JFrame(), true);
+                    dialog = new QLLichSu(new javax.swing.JFrame(), true);
                 } catch (Exception ex) {
-                    Logger.getLogger(danhsachdongvatJDiaLog.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(QLLichSu.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -390,18 +393,15 @@ public class danhsachdongvatJDiaLog extends javax.swing.JDialog {
     private javax.swing.JButton btn_moi;
     private javax.swing.JButton btn_sua;
     private javax.swing.JButton btn_xoa;
-    private javax.swing.JComboBox<String> cbb_DanhMuc;
+    private javax.swing.JComboBox<String> cbb_Dv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tbl_DongVat;
-    private javax.swing.JTextField txt_CanNang;
-    private javax.swing.JTextArea txt_GhiChu;
-    private javax.swing.JTextField txt_MaDV;
-    private javax.swing.JTextField txt_TenDV;
+    private javax.swing.JTable tbl_ls;
+    private javax.swing.JTextField txt_loaibenh;
+    private javax.swing.JTextField txt_mals;
+    private javax.swing.JTextField txt_ngaytiem;
     // End of variables declaration//GEN-END:variables
 }
