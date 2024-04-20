@@ -103,6 +103,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="H&#x1b0;&#x1edb;ng D&#x1eab;n S&#x1eed; D&#x1ee5;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="qlsk">
           <Properties>

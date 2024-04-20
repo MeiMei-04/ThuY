@@ -53,6 +53,11 @@ public class MainJframe extends javax.swing.JFrame {
         });
 
         jButton4.setText("Hướng Dẫn Sử Dụng");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         qlsk.setText("Quản lý Thú Y");
         qlsk.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +169,14 @@ public class MainJframe extends javax.swing.JFrame {
            
         }
     }//GEN-LAST:event_dmdvActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        try {
+            uliti.webService.openWeb();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
